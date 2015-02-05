@@ -20,13 +20,17 @@ public class MyCustomAdapter extends ArrayAdapter {
     private Context mContext;
     private int mResource;
     private NotifyFetch notifyFetch;
+    private int fi;
+    private boolean continuar;
 
-    public MyCustomAdapter(Context context, List<Dades> data, NotifyFetch notifyFetch){
+    public MyCustomAdapter(Context context, List<Dades> data, NotifyFetch notifyFetch, int fi){
         super(context, R.layout.custom_item, data);
         this.mContext = context;
         this.mDades = data;
         this.mResource = R.layout.custom_item;
         this.notifyFetch = notifyFetch;
+        this.fi = fi;
+        continuar=true;
     }
 
     @Override
@@ -48,10 +52,19 @@ public class MyCustomAdapter extends ArrayAdapter {
         icono.setImageBitmap(mDades.get(position).icono);
         imatge.setImageBitmap(mDades.get(position).imatge);
         //especifiquem quan val cada nova dada
-        if (mDades.size() -1 == position) {
+        if (mDades.size()==fi) {
+            continuar=false;
+        }else if (mDades.size() -1 == position&&continuar){
             notifyFetch.notifyFetchOnline();
+        }else if (mDades.size() == position&&!continuar){
+            notifyFetch.epp();
         }
+
+
+
 
         return rowView;
     }
+
+
 }
