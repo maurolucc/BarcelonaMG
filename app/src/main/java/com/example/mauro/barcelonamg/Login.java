@@ -3,15 +3,12 @@ package com.example.mauro.barcelonamg;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.parse.LogInCallback;
-import com.parse.Parse;
 import com.parse.ParseUser;
 
 
@@ -48,10 +45,9 @@ public class Login extends ActionBarActivity {
                         public void done(ParseUser user, com.parse.ParseException e) {
                             if (user != null) {
                                 //Toast.makeText(getApplicationContext(), "logged in", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                                startActivity(intent);
+                                finish();
                             } else {
-                                Toast.makeText(getApplicationContext(), "Signup failed.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         }
                     });

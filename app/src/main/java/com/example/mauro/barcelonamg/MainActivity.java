@@ -5,8 +5,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -14,6 +12,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.mauro.barcelonamg.adapter.MyCustomAdapter;
+import com.example.mauro.barcelonamg.interfices.NotifyFetch;
 import com.example.mauro.barcelonamg.model.Dades;
 import com.parse.Parse;
 import com.parse.ParseException;
@@ -26,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends ActionBarActivity implements NotifyFetch {
 
     private ListView mListView;
     private ArrayAdapter<String> adapter;
@@ -56,7 +55,6 @@ public class MainActivity extends ActionBarActivity {
         if(currentUser==null){
             Intent intent= new Intent(getApplicationContext(),Login.class);
             startActivity(intent);
-            this.finish();
 
         }else {
             fetchData(NAME, DESCRIPCIO, TYPE, ICON, IMAGE);
@@ -88,11 +86,11 @@ public class MainActivity extends ActionBarActivity {
                 ParseFile img2 = object.getParseFile(key5);
                 byte[] date = img2.getData();
                 Bitmap img = BitmapFactory.decodeByteArray(date,0,date.length);
-                //Bitmap img= (Bitmap) object.get(key5);
+                //Bitmap omg= (Bitmap) object.get(key5);
 
                 dades.add(new Dades(nom,descrip,icn,img,type));
             }
-            adapter= new MyCustomAdapter(getApplicationContext(), dades);
+            adapter= new MyCustomAdapter(getApplicationContext(), dades, this);
 
         }catch(ParseException e){
             e.printStackTrace();
@@ -100,5 +98,10 @@ public class MainActivity extends ActionBarActivity {
         }
 
 
+    }
+
+    @Override
+    public void notifyFetchOnline() {
+        Toast.makeText(getApplicationContext(), "end of list", Toast.LENGTH_SHORT).show();
     }
 }

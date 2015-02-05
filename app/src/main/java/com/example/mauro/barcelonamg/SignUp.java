@@ -1,10 +1,7 @@
 package com.example.mauro.barcelonamg;
 
-import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -57,8 +54,7 @@ public class SignUp extends ActionBarActivity {
                         public void done(ParseException e) {
                             if (e == null) {
                                 // Hooray! Let them use the app now.
-                                Intent mIntent = new Intent(getApplicationContext(),MainActivity.class);
-                                startActivity(mIntent);
+                                SignUp.this.finish();
 
                             } else {
                                 Toast.makeText(getApplicationContext(), "Sign up didn't succeed.", Toast.LENGTH_SHORT).show();
