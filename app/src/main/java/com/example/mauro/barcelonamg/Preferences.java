@@ -26,7 +26,7 @@ public class Preferences extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                intent.putExtra("Preference","Bar");
+                intent.putExtra("Preferences","Bar");
                 startActivity(intent);
             }
         });
@@ -34,7 +34,7 @@ public class Preferences extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                intent.putExtra("Preference","Disco");
+                intent.putExtra("Preferences","Disco");
                 startActivity(intent);
             }
         });
@@ -42,7 +42,7 @@ public class Preferences extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                intent.putExtra("Preference","Festival");
+                intent.putExtra("Preferences","Festival");
                 startActivity(intent);
             }
         });
