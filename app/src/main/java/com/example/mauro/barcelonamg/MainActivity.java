@@ -5,15 +5,12 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.mauro.barcelonamg.adapter.MyCustomAdapter;
 import com.example.mauro.barcelonamg.interfices.NotifyFetch;
 import com.example.mauro.barcelonamg.model.Dades;
-import com.example.mauro.barcelonamg.model.MyApplication;
 import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -51,11 +48,6 @@ public class MainActivity extends ActionBarActivity implements NotifyFetch {
         dades = new ArrayList<>();
         adapter= new MyCustomAdapter(getApplicationContext(), dades, this);
         mListView.setAdapter(adapter);
-        /*try {
-            adapter.posarLimit(ParseQuery.getQuery("Leisure").count());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }*/
 
         if (savedInstanceState == null) {
             // Enable Local Datastore.
@@ -64,12 +56,19 @@ public class MainActivity extends ActionBarActivity implements NotifyFetch {
         }
 
         ParseUser currentUser = ParseUser.getCurrentUser();
-        fetchData(NAME, DESCRIPCIO, TYPE, ICON, IMAGE);
+
 
         if(currentUser==null){
             Intent intent= new Intent(getApplicationContext(),Login.class);
             startActivity(intent);
         }
+
+        try {
+            adapter.posarLimit(ParseQuery.getQuery("Leisure").count());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        fetchData(NAME, DESCRIPCIO, TYPE, ICON, IMAGE);
     }
 
     public void fetchData(String key1,String key2, String key3, String key4, String key5){

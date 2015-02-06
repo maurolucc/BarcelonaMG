@@ -17,10 +17,7 @@
             android:src="@drawable/ic_launcher"
             android:id="@+id/icono"
             android:layout_weight="3"
-            android:maxHeight="20dp"
-            android:maxWidth="20dp"
-            android:minHeight="20dp"
-            android:minWidth="20dp"/>
+            android:paddingRight="8dp"/>
         <TextView
             android:id="@+id/nom"
             android:text="Pacha"
@@ -34,6 +31,7 @@
 
     <TextView
         android:layout_width="match_parent"
+        android:paddingTop="8dp"
         android:layout_height="wrap_content"
         android:id="@+id/text"
         android:textColor="@color/black"
@@ -42,6 +40,7 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:paddingTop="8dp"
         android:id="@+id/imatge"
         android:layout_gravity="center"
         android:src="@drawable/ic_launcher"/>

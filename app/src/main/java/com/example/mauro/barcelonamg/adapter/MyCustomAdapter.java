@@ -31,7 +31,6 @@ public class MyCustomAdapter extends ArrayAdapter {
         this.mDades = data;
         this.mResource = R.layout.custom_item;
         this.notifyFetch = notifyFetch;
-        fi = 17;
         continuar=true;
     }
 
