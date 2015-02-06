@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.mauro.barcelonamg.model.MyApplication;
 import com.parse.LogInCallback;
 import com.parse.ParseUser;
 
@@ -44,7 +45,6 @@ public class Login extends ActionBarActivity {
                     ParseUser.logInInBackground(username, password, new LogInCallback() {
                         public void done(ParseUser user, com.parse.ParseException e) {
                             if (user != null) {
-                                //Toast.makeText(getApplicationContext(), "logged in", Toast.LENGTH_SHORT).show();
                                 finish();
                             } else {
                                 Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -63,4 +63,8 @@ public class Login extends ActionBarActivity {
         usernameEditText= (EditText) findViewById(R.id.userName);
     }
 
+    @Override
+    public void onBackPressed() {
+        Toast.makeText(getApplicationContext(), "You have to log in!", Toast.LENGTH_SHORT).show();
+    }
 }

@@ -27,7 +27,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textSize="20dp"/>
+            android:textSize="20dp"
+            android:textColor="@color/black"/>
 
         </LinearLayout>
 
@@ -35,6 +36,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/text"
+        android:textColor="@color/black"
         android:text="PachaBarcelona... ¡ya está aquí! Y vuelve con muchas fuerzas a formar parte de las grandes discotecas y noches de la ciudad. Cada sábado, te trae su sesión Feel Ibiza,"/>
 
     <ImageView

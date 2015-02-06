@@ -1,12 +1,14 @@
 package com.example.mauro.barcelonamg.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.mauro.barcelonamg.R;
 import com.example.mauro.barcelonamg.interfices.NotifyFetch;
@@ -23,13 +25,13 @@ public class MyCustomAdapter extends ArrayAdapter {
     private int fi;
     private boolean continuar;
 
-    public MyCustomAdapter(Context context, List<Dades> data, NotifyFetch notifyFetch, int fi){
+    public MyCustomAdapter(Context context, List<Dades> data, NotifyFetch notifyFetch){
         super(context, R.layout.custom_item, data);
         this.mContext = context;
         this.mDades = data;
         this.mResource = R.layout.custom_item;
         this.notifyFetch = notifyFetch;
-        this.fi = fi;
+        fi = 17;
         continuar=true;
     }
 
@@ -51,19 +53,25 @@ public class MyCustomAdapter extends ArrayAdapter {
         text.setText(mDades.get(position).text);
         icono.setImageBitmap(mDades.get(position).icono);
         imatge.setImageBitmap(mDades.get(position).imatge);
+
         //especifiquem quan val cada nova dada
         if (mDades.size()==fi) {
             continuar=false;
         }else if (mDades.size() -1 == position&&continuar){
             notifyFetch.notifyFetchOnline();
-        }else if (mDades.size() == position&&!continuar){
+        }
+
+        if (mDades.size() -1 == position&&!continuar){
+            Log.d("final","he arribat al final");
+            Toast.makeText(mContext, "end of list", Toast.LENGTH_SHORT).show();
             notifyFetch.epp();
         }
 
-
-
-
         return rowView;
+    }
+
+    public void posarLimit(int limit){
+        fi=limit;
     }
 
 
