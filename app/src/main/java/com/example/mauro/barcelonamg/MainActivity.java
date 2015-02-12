@@ -1,41 +1,29 @@
 package com.example.mauro.barcelonamg;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ListView;
-import android.widget.Toast;
 
-import com.example.mauro.barcelonamg.adapter.MyCustomAdapter;
-import com.example.mauro.barcelonamg.interfices.NotifyFetch;
-import com.example.mauro.barcelonamg.model.Dades;
+import com.example.mauro.barcelonamg.adapter.DiscotecaListAdapter;
+import com.example.mauro.barcelonamg.model.Discoteca;
+import com.parse.FindCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
-import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseQueryAdapter;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
-public class MainActivity extends ActionBarActivity implements NotifyFetch {
+public class MainActivity extends ActionBarActivity{
 
     private ListView mListView;
-    private MyCustomAdapter adapter;
-    private List<ParseObject> onlineData;
-    private List<Dades> dades;
-
-    private int i = 0;
-
-    final private String NAME = "Name";
-    final private String TYPE = "Type";
-    final private String ICON = "Icon";
-    final private String IMAGE = "Image";
-    final private String DESCRIPCIO = "Descripcio";
+    private ParseQueryAdapter<Discoteca> todoListAdapter;
 
 
     @Override
@@ -44,16 +32,30 @@ public class MainActivity extends ActionBarActivity implements NotifyFetch {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mListView = (ListView) findViewById(R.id.listView);
-        dades = new ArrayList<>();
-        adapter= new MyCustomAdapter(getApplicationContext(), dades, this);
-        mListView.setAdapter(adapter);
+        ParseObject.registerSubclass(Discoteca.class);
 
         if (savedInstanceState == null) {
             // Enable Local Datastore.
-            Parse.enableLocalDatastore(this);
+            Parse.enableLocalDatastore(getApplicationContext());
             Parse.initialize(this, "3PZjEECwDOYgxpqkzRPseHbistE33bEBC0cDl8DC", "m5uh4bkVr9HWkZ5jhK5tfcscBuA7xtyeYCILI1t0");
         }
+
+        mListView = (ListView) findViewById(R.id.listView);
+
+        // Set up the Parse query to use in the adapter
+        ParseQueryAdapter.QueryFactory<Discoteca> factory = new ParseQueryAdapter.QueryFactory<Discoteca>() {
+            public ParseQuery<Discoteca> create() {
+                ParseQuery<Discoteca> query = Discoteca.getQuery();
+                query.fromLocalDatastore();
+                return query;
+            }
+        };
+
+        // Set up the adapter
+        todoListAdapter = new DiscotecaListAdapter(this, factory);
+
+        // Attach the query adapter to the view
+        mListView.setAdapter(todoListAdapter);
 
         ParseUser currentUser = ParseUser.getCurrentUser();
 
@@ -61,77 +63,36 @@ public class MainActivity extends ActionBarActivity implements NotifyFetch {
         if(currentUser==null){
             Intent intent= new Intent(getApplicationContext(),Login.class);
             startActivity(intent);
-        }
-
-        try {
-            adapter.posarLimit(ParseQuery.getQuery("Leisure").count());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        fetchData(NAME, DESCRIPCIO, TYPE, ICON, IMAGE);
+            loadFromParse();
+        };
     }
 
-    public void fetchData(String key1,String key2, String key3, String key4, String key5){
-        ParseQuery<ParseObject> query =  ParseQuery.getQuery("Leisure").setLimit(10);
-
-        try{
-            onlineData= query.find();
-
-            for(ParseObject object: onlineData){
-                String nom= object.get(key1).toString();
-                String descrip= object.get(key2).toString();
-                String type= object.get(key3).toString();
-
-                ParseFile icn2 = object.getParseFile(key4);
-                byte[] data = icn2.getData();
-                Bitmap icn = BitmapFactory.decodeByteArray(data, 0, data.length);
-
-                ParseFile img2 = object.getParseFile(key5);
-                byte[] date = img2.getData();
-                Bitmap img = BitmapFactory.decodeByteArray(date,0,date.length);
-
-                dades.add(new Dades(nom,descrip,icn,img,type));
+    private void loadFromParse() {
+        ParseQuery<Discoteca> query = Discoteca.getQuery();
+        query.addDescendingOrder("createdAt");
+        query.findInBackground(new FindCallback<Discoteca>() {
+            public void done(List<Discoteca> todos, ParseException e) {
+                if (e == null) {
+                    ParseObject.pinAllInBackground((List<Discoteca>) todos,
+                            new SaveCallback() {
+                                public void done(ParseException e) {
+                                    if (e == null) {
+                                        if (!isFinishing()) {
+                                            todoListAdapter.loadObjects();
+                                        }
+                                    } else {
+                                        Log.i("TodoListActivity",
+                                                "Error pinning todos: "
+                                                        + e.getMessage());
+                                    }
+                                }
+                            });
+                } else {
+                    Log.i("TodoListActivity",
+                            "loadFromParse: Error finding pinned todos: "
+                                    + e.getMessage());
+                }
             }
-            adapter.notifyDataSetChanged();
-
-        }catch(ParseException e){
-            e.printStackTrace();
-            Toast.makeText(getApplicationContext(),"Error on fetching data",Toast.LENGTH_SHORT).show();
-        }
-    }
-
-
-    @Override
-    public void notifyFetchOnline() {
-        ArrayList<Dades> a = new ArrayList<>();
-        try{
-            for(ParseObject object: ParseQuery.getQuery("Leisure").setLimit(10).setSkip(10).find()){
-                String nom= object.get(NAME).toString();
-                String descrip= object.get(DESCRIPCIO).toString();
-                String type= object.get(TYPE).toString();
-
-                ParseFile icn2 = object.getParseFile(ICON);
-                byte[] data = icn2.getData();
-                Bitmap icn = BitmapFactory.decodeByteArray(data, 0, data.length);
-
-                ParseFile img2 = object.getParseFile(IMAGE);
-                byte[] date = img2.getData();
-                Bitmap img = BitmapFactory.decodeByteArray(date,0,date.length);
-
-
-                a.add(new Dades(nom, descrip, icn, img, type));
-            }
-
-            adapter.addAll(a);
-
-        }catch(ParseException e){
-            e.printStackTrace();
-            Toast.makeText(getApplicationContext(),"Error on notifyFetchOnline",Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    @Override
-    public void epp() {
-        Toast.makeText(getApplicationContext(), "end of list", Toast.LENGTH_SHORT).show();
+        });
     }
 }
