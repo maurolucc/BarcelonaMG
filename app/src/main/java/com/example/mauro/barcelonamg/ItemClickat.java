@@ -32,6 +32,11 @@ public class ItemClickat extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_clickat);
 
+        nom = (TextView) findViewById(R.id.nomGran);
+        text = (TextView) findViewById(R.id.textGran);
+        icono = (ImageView) findViewById(R.id.iconoGran);
+        imatge = (ImageView) findViewById(R.id.imatgeGran);
+
         Bundle extras = getIntent().getExtras();
         if(extras !=null) {
             value = extras.getString("KEY");
@@ -43,39 +48,34 @@ public class ItemClickat extends ActionBarActivity {
             public void done(ParseObject object, ParseException e) {
                 if (e == null) {
                     item = object;
+                    Log.e("eeeeee","cccccccccccccccccccccccccccccccccccccccccccccccc");
+
+                    nom.setText(item.getString("Name"));
+                    text.setText(item.getString("Descripcio"));
+
+                    Bitmap icon = null;
+                    try {
+                        byte[] data = item.getParseFile("Icon").getData();
+                        icon = BitmapFactory.decodeByteArray(data, 0, data.length);
+                    } catch (ParseException t) {
+                        t.printStackTrace();
+                    }
+                    icono.setImageBitmap(icon);
+
+                    Bitmap image = null;
+                    try {
+                        byte[] data = item.getParseFile("Image").getData();
+                        image = BitmapFactory.decodeByteArray(data, 0, data.length);
+                    } catch (ParseException g) {
+                        g.printStackTrace();
+                    }
+                    imatge.setImageBitmap(image);
+
                 } else {
                     Log.e("error",e.getMessage());
                 }
             }
         });
-
-        nom = (TextView) findViewById(R.id.nomGran);
-        text = (TextView) findViewById(R.id.textGran);
-        icono = (ImageView) findViewById(R.id.iconoGran);
-        imatge = (ImageView) findViewById(R.id.imatgeGran);
-
-
-        nom.setText(item.getString("Name"));
-        text.setText(item.getString("Descripcio"));
-
-        Bitmap icon = null;
-        try {
-            byte[] data = item.getParseFile("Icon").getData();
-            icon = BitmapFactory.decodeByteArray(data, 0, data.length);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        icono.setImageBitmap(icon);
-
-        Bitmap image = null;
-        try {
-            byte[] data = item.getParseFile("Image").getData();
-            image = BitmapFactory.decodeByteArray(data, 0, data.length);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        imatge.setImageBitmap(image);
-
     }
 
 
