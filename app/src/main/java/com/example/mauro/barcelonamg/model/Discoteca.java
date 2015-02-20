@@ -9,12 +9,6 @@ import com.parse.ParseQuery;
 
 @ParseClassName("Leisure")
 public class Discoteca extends ParseObject {
-    public Number getDadesId(){
-        return getNumber("dadesId");
-    }
-    public void setDadesId(Number title) {
-        put("dadesId", title);
-    }
     public String getName(){
         return getString("Name");
     }

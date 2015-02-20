@@ -14,31 +14,31 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_gravity="center"
-            android:id="@+id/icono"
+            android:id="@+id/iconoGran"
             android:layout_weight="3"
             android:paddingRight="8dp"/>
         <TextView
-            android:id="@+id/nom"
+            android:id="@+id/nomGran"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textSize="20dp"
             android:textColor="@color/black"/>
 
-        </LinearLayout>
+    </LinearLayout>
 
     <TextView
         android:layout_width="match_parent"
         android:paddingTop="8dp"
         android:layout_height="wrap_content"
-        android:id="@+id/text"
+        android:id="@+id/textGran"
         android:textColor="@color/black"/>
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="200dp"
         android:paddingTop="8dp"
-        android:id="@+id/imatge"
+        android:id="@+id/imatgeGran"
         android:layout_gravity="center"/>
 
 

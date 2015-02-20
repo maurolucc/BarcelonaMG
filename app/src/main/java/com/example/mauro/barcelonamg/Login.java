@@ -8,7 +8,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.mauro.barcelonamg.model.MyApplication;
 import com.parse.LogInCallback;
 import com.parse.ParseUser;
 

@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.mauro.barcelonamg.adapter.DiscotecaListAdapter;
@@ -65,11 +67,19 @@ public class MainActivity extends ActionBarActivity{
             startActivity(intent);
             loadFromParse();
         };
+
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent llencarItemClick = new Intent(getApplicationContext(),ItemClickat.class);
+                llencarItemClick.putExtra("KEY", todoListAdapter.getItem(position).getObjectId());
+                startActivity(llencarItemClick);
+            }
+        });
     }
 
     private void loadFromParse() {
         ParseQuery<Discoteca> query = Discoteca.getQuery();
-        query.addDescendingOrder("createdAt");
         query.findInBackground(new FindCallback<Discoteca>() {
             public void done(List<Discoteca> todos, ParseException e) {
                 if (e == null) {
