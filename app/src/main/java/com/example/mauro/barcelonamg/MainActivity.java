@@ -35,6 +35,7 @@ public class MainActivity extends ActionBarActivity{
         setContentView(R.layout.activity_main);
 
         ParseObject.registerSubclass(Discoteca.class);
+        
 
         if (savedInstanceState == null) {
             // Enable Local Datastore.
@@ -87,9 +88,7 @@ public class MainActivity extends ActionBarActivity{
                             new SaveCallback() {
                                 public void done(ParseException e) {
                                     if (e == null) {
-                                        if (!isFinishing()) {
-                                            todoListAdapter.loadObjects();
-                                        }
+                                        todoListAdapter.loadObjects();
                                     } else {
                                         Log.i("TodoListActivity",
                                                 "Error pinning todos: "

@@ -16,14 +16,16 @@
             android:layout_gravity="center"
             android:id="@+id/icono"
             android:layout_weight="3"
-            android:paddingRight="8dp"/>
+            android:paddingRight="8dp"
+            android:src="@drawable/ic_launcher"/>
         <TextView
             android:id="@+id/nom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textSize="20dp"
-            android:textColor="@color/black"/>
+            android:textColor="@color/black"
+            android:text="caca"/>
 
         </LinearLayout>
 
@@ -32,15 +34,15 @@
         android:paddingTop="8dp"
         android:layout_height="wrap_content"
         android:id="@+id/text"
-        android:textColor="@color/black"/>
+        android:textColor="@color/black"
+        android:text="caca"/>
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="200dp"
         android:paddingTop="8dp"
         android:id="@+id/imatge"
-        android:layout_gravity="center"/>
-
-
+        android:layout_gravity="center"
+        android:src="@drawable/ic_launcher"/>
 
 </LinearLayout>
