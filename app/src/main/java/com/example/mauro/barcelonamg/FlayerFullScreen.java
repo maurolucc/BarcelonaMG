@@ -9,16 +9,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 
-import com.example.mauro.barcelonamg.model.Discoteca;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
-import com.parse.ParseQueryAdapter;
 
 
 public class FlayerFullScreen extends ActionBarActivity {
-    private ParseQueryAdapter<Discoteca> todoListAdapter;
     private String value;
     private ParseObject item;
 
