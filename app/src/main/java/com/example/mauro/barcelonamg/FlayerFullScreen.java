@@ -1,6 +1,5 @@
 package com.example.mauro.barcelonamg;
 
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v7.app.ActionBarActivity;
@@ -8,11 +7,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.example.mauro.barcelonamg.adapter.DiscotecaListAdapter;
 import com.example.mauro.barcelonamg.model.Discoteca;
 import com.parse.GetCallback;
 import com.parse.ParseException;
@@ -21,23 +17,20 @@ import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
 
 
-public class ItemClickat extends ActionBarActivity {
+public class FlayerFullScreen extends ActionBarActivity {
     private ParseQueryAdapter<Discoteca> todoListAdapter;
     private String value;
     private ParseObject item;
 
-    private TextView nom,text;
-    private ImageView icono,imatge;
+    private ImageView imatge;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_item_clickat);
+        setContentView(R.layout.activity_flayer_full_screen);
 
-        nom = (TextView) findViewById(R.id.nomGran);
-        text = (TextView) findViewById(R.id.textGran);
-        icono = (ImageView) findViewById(R.id.iconoGran);
-        imatge = (ImageView) findViewById(R.id.imatgeGran);
+
+        imatge = (ImageView) findViewById(R.id.imatgeFlayer);
 
         Bundle extras = getIntent().getExtras();
         if(extras !=null) {
@@ -51,18 +44,6 @@ public class ItemClickat extends ActionBarActivity {
                 if (e == null) {
                     item = object;
 
-                    nom.setText(item.getString("Name"));
-                    text.setText(item.getString("Descripcio"));
-
-                    Bitmap icon = null;
-                    try {
-                        byte[] data = item.getParseFile("Icon").getData();
-                        icon = BitmapFactory.decodeByteArray(data, 0, data.length);
-                    } catch (ParseException t) {
-                        t.printStackTrace();
-                    }
-                    icono.setImageBitmap(icon);
-
                     Bitmap image = null;
                     try {
                         byte[] data = item.getParseFile("Image").getData();
@@ -73,17 +54,8 @@ public class ItemClickat extends ActionBarActivity {
                     imatge.setImageBitmap(image);
 
                 } else {
-                    Log.e("error",e.getMessage());
+                    Log.e("error", e.getMessage());
                 }
-            }
-        });
-
-        imatge.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent llencarFlayerFullScreen= new Intent(getApplicationContext(),FlayerFullScreen.class);
-                llencarFlayerFullScreen.putExtra("KEY", value);
-                startActivity(llencarFlayerFullScreen);
             }
         });
     }
@@ -92,7 +64,7 @@ public class ItemClickat extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_item_clickat, menu);
+        getMenuInflater().inflate(R.menu.menu_flayer_full_screen, menu);
         return true;
     }
 

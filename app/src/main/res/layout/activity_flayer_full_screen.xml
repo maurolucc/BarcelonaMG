@@ -2,14 +2,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context="com.example.mauro.barcelonamg.FlayerFullScreen"
+    android:background="@color/black">
 
-
-    <ListView
-        android:id="@+id/listView"
+    <ImageView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
+        android:layout_height="match_parent"
+        android:id="@+id/imatgeFlayer"
+        android:layout_gravity="center"/>
 
 </LinearLayout>

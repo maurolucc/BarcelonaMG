@@ -36,6 +36,11 @@
             android:name=".ItemClickat"
             android:label="@string/title_activity_item_clickat" >
         </activity>
+        <activity
+            android:name=".FlayerFullScreen"
+            android:label="@string/title_activity_flayer_full_screen"
+            android:theme="@style/Theme.AppCompat.NoActionBar">
+        </activity>
     </application>
 
 </manifest>
