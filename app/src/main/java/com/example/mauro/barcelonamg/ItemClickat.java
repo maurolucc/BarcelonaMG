@@ -9,10 +9,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.mauro.barcelonamg.adapter.DiscotecaListAdapter;
 import com.example.mauro.barcelonamg.model.Discoteca;
 import com.parse.GetCallback;
 import com.parse.ParseException;
@@ -28,6 +28,7 @@ public class ItemClickat extends ActionBarActivity {
 
     private TextView nom,text;
     private ImageView icono,imatge;
+    private Button likeBut, comBut;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +39,8 @@ public class ItemClickat extends ActionBarActivity {
         text = (TextView) findViewById(R.id.textGran);
         icono = (ImageView) findViewById(R.id.iconoGran);
         imatge = (ImageView) findViewById(R.id.imatgeGran);
+        likeBut = (Button) findViewById(R.id.likeButton2);
+        comBut = (Button) findViewById(R.id.commentButton2);
 
         Bundle extras = getIntent().getExtras();
         if(extras !=null) {
@@ -84,6 +87,23 @@ public class ItemClickat extends ActionBarActivity {
                 Intent llencarFlayerFullScreen= new Intent(getApplicationContext(),FlayerFullScreen.class);
                 llencarFlayerFullScreen.putExtra("KEY", value);
                 startActivity(llencarFlayerFullScreen);
+            }
+        });
+
+        likeBut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ParseQuery<ParseObject> query = ParseQuery.getQuery("Leisure");
+                query.getInBackground(value, new GetCallback<ParseObject>() {
+                    public void done(ParseObject object, ParseException e) {
+                        if (e == null) {
+                            object.increment("numLikes");
+                            object.saveInBackground();
+                        } else {
+                            // something went wrong
+                        }
+                    }
+                });
             }
         });
     }

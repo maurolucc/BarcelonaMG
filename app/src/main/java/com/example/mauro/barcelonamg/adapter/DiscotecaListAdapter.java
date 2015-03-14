@@ -1,18 +1,24 @@
 package com.example.mauro.barcelonamg.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.mauro.barcelonamg.ItemClickat;
 import com.example.mauro.barcelonamg.R;
 import com.example.mauro.barcelonamg.model.Discoteca;
+import com.parse.GetCallback;
 import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
 
 /**
@@ -41,6 +47,7 @@ public class DiscotecaListAdapter extends ParseQueryAdapter<Discoteca> {
         TextView text = (TextView) rowView.findViewById(R.id.text);
         ImageView icono = (ImageView) rowView.findViewById(R.id.icono);
         ImageView imatge = (ImageView) rowView.findViewById(R.id.imatge);
+        final Button like = (Button) rowView.findViewById(R.id.likeButton);
         //separem cada dada per poder-les modificar
 
         nom.setText(object.getName());
@@ -48,6 +55,33 @@ public class DiscotecaListAdapter extends ParseQueryAdapter<Discoteca> {
 
         new DownloadImageTask(object,icono).execute("");
         new DownloadImageTaskk(object,imatge).execute("");
+
+        final Discoteca utilitzar = object;
+        like.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ParseQuery<ParseObject> query = ParseQuery.getQuery("Leisure");
+                query.getInBackground(utilitzar.getObjectId(), new GetCallback<ParseObject>() {
+                    public void done(ParseObject object, ParseException e) {
+                        if (e == null) {
+                            object.increment("numLikes");
+                            object.saveInBackground();
+                        } else {
+                            // something went wrong
+                        }
+                    }
+                });
+            }
+        });
+
+        text.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent llencarItemClick = new Intent(mContext,ItemClickat.class);
+                llencarItemClick.putExtra("KEY", utilitzar.getObjectId());
+                mContext.startActivity(llencarItemClick);
+            }
+        });
 
 
         return rowView;
