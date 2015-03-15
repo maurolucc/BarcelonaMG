@@ -9,12 +9,14 @@
         android:layout_height="wrap_content"
         android:id="@+id/qui"
         android:text="Eldel Bar"
-        android:textSize="20dp"/>
+        android:textSize="20dp"
+        android:textColor="@color/black"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/que"
-        android:text="comentari"/>
+        android:text="comentari"
+        android:textColor="@color/black"/>
 
 </LinearLayout>
