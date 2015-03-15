@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.mauro.barcelonamg.Comments;
 import com.example.mauro.barcelonamg.ItemClickat;
 import com.example.mauro.barcelonamg.R;
 import com.example.mauro.barcelonamg.model.Discoteca;
@@ -21,9 +23,6 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
 
-/**
- * Created by Guifré on 12/02/2015.
- */
 public class DiscotecaListAdapter extends ParseQueryAdapter<Discoteca> {
     private Context mContext;
     private int mResource;
@@ -48,6 +47,7 @@ public class DiscotecaListAdapter extends ParseQueryAdapter<Discoteca> {
         ImageView icono = (ImageView) rowView.findViewById(R.id.icono);
         ImageView imatge = (ImageView) rowView.findViewById(R.id.imatge);
         final Button like = (Button) rowView.findViewById(R.id.likeButton);
+        final Button comm = (Button) rowView.findViewById(R.id.commentButton);
         //separem cada dada per poder-les modificar
 
         nom.setText(object.getName());
@@ -66,18 +66,30 @@ public class DiscotecaListAdapter extends ParseQueryAdapter<Discoteca> {
                         if (e == null) {
                             object.increment("numLikes");
                             object.saveInBackground();
+                            Number numlikes = object.getNumber("numLikes");
+                            like.setText("Likes "+numlikes);
                         } else {
-                            // something went wrong
+                            Log.e("error like", "no sha pogut posar el me gusta");
                         }
                     }
                 });
             }
         });
 
+        comm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent llencarItemClick = new Intent(mContext, Comments.class);
+                llencarItemClick.putExtra("KEY", utilitzar.getObjectId());
+                mContext.startActivity(llencarItemClick);
+            }
+        });
+
+
         text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent llencarItemClick = new Intent(mContext,ItemClickat.class);
+                Intent llencarItemClick = new Intent(mContext, ItemClickat.class);
                 llencarItemClick.putExtra("KEY", utilitzar.getObjectId());
                 mContext.startActivity(llencarItemClick);
             }

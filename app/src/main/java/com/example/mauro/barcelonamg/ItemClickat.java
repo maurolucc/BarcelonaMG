@@ -13,16 +13,12 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.mauro.barcelonamg.model.Discoteca;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
-import com.parse.ParseQueryAdapter;
-
 
 public class ItemClickat extends ActionBarActivity {
-    private ParseQueryAdapter<Discoteca> todoListAdapter;
     private String value;
     private ParseObject item;
 
@@ -99,11 +95,22 @@ public class ItemClickat extends ActionBarActivity {
                         if (e == null) {
                             object.increment("numLikes");
                             object.saveInBackground();
+                            Number numlikes = object.getNumber("numLikes");
+                            likeBut.setText("Likes " + numlikes);
                         } else {
-                            // something went wrong
+                            Log.e("error like", "no sha pogut posar el me gusta");
                         }
                     }
                 });
+            }
+        });
+
+        comBut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent llencarItemClick = new Intent(getApplicationContext(), Comments.class);
+                llencarItemClick.putExtra("KEY", value);
+                startActivity(llencarItemClick);
             }
         });
     }

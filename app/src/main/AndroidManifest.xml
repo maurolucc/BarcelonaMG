@@ -39,7 +39,11 @@
         <activity
             android:name=".FlayerFullScreen"
             android:label="@string/title_activity_flayer_full_screen"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
+            android:theme="@style/Theme.AppCompat.NoActionBar" >
+        </activity>
+        <activity
+            android:name=".Comments"
+            android:label="@string/title_activity_comments" >
         </activity>
     </application>
 

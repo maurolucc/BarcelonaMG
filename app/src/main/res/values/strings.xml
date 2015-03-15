@@ -9,5 +9,6 @@
     <string name="title_activity_preferences">Preferences</string>
     <string name="title_activity_item_clickat">ItemClickat</string>
     <string name="title_activity_flayer_full_screen">FlayerFullScreen</string>
+    <string name="title_activity_comments">Comments</string>
 
 </resources>

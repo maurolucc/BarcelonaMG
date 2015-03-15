@@ -33,7 +33,6 @@ public class MainActivity extends ActionBarActivity{
         setContentView(R.layout.activity_main);
 
         ParseObject.registerSubclass(Discoteca.class);
-        
 
         if (savedInstanceState == null) {
             // Enable Local Datastore.
@@ -65,7 +64,7 @@ public class MainActivity extends ActionBarActivity{
             Intent intent= new Intent(getApplicationContext(),Login.class);
             startActivity(intent);
             loadFromParse();
-        };
+        }
     }
 
     private void loadFromParse() {
@@ -73,7 +72,7 @@ public class MainActivity extends ActionBarActivity{
         query.findInBackground(new FindCallback<Discoteca>() {
             public void done(List<Discoteca> todos, ParseException e) {
                 if (e == null) {
-                    ParseObject.pinAllInBackground((List<Discoteca>) todos,
+                    ParseObject.pinAllInBackground(todos,
                             new SaveCallback() {
                                 public void done(ParseException e) {
                                     if (e == null) {
